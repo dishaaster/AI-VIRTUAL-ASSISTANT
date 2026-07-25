@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Bench — AI Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">›_</span>
+      <div class="brand-text">
+        <div class="brand-name">Prompt Bench</div>
+        <div class="brand-sub">AI Assistant · by Disha Tripathi</div>
+      </div>
+    </div>
+
+    <nav class="fn-nav" id="fn-nav">
+      <button class="fn-btn active" data-fn="qa">
+        <span class="fn-idx">01</span>
+        <span class="fn-label">Answer Questions</span>
+      </button>
+      <button class="fn-btn" data-fn="summarize">
+        <span class="fn-idx">02</span>
+        <span class="fn-label">Summarize Text</span>
+      </button>
+      <button class="fn-btn" data-fn="creative">
+        <span class="fn-idx">03</span>
+        <span class="fn-label">Generate Creative Content</span>
+      </button>
+      <button class="fn-btn" data-fn="advice">
+        <span class="fn-idx">04</span>
+        <span class="fn-label">Give Advice</span>
+      </button>
+    </nav>
+
+    <div class="mode-note" id="mode-note">
+      <div class="mode-dot"></div>
+      <div>
+        <div class="mode-title">Demo mode</div>
+        <div class="mode-desc">No OPENAI_API_KEY set — running on built-in offline logic. Add a key to route these same prompts to a live model.</div>
+      </div>
+    </div>
+
+    <div class="stats" id="stats-box">
+      <div class="stats-title">Feedback so far</div>
+      <div class="stats-row"><span id="stat-total">0</span> responses rated</div>
+      <div class="stats-row"><span id="stat-rate">—</span> found helpful</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <h1 id="fn-title">Answer Questions</h1>
+      <p id="fn-desc" class="fn-desc">Ask a factual question. Pick a prompt style below to see how phrasing changes the assistant's approach.</p>
+    </header>
+
+    <section class="variant-picker" id="variant-picker">
+      <!-- filled by JS -->
+    </section>
+
+    <section class="panel input-panel">
+      <form id="fn-form">
+
+        <div class="field" data-field="qa">
+          <label for="input-question">Your question</label>
+          <input id="input-question" type="text" placeholder="e.g. What is the capital of France?" autocomplete="off">
+        </div>
+
+        <div class="field" data-field="summarize" hidden>
+          <label for="input-text">Text to summarize</label>
+          <textarea id="input-text" rows="6" placeholder="Paste an article, paragraph, or notes here…"></textarea>
+        </div>
+
+        <div class="field-group" data-field="creative" hidden>
+          <div class="field">
+            <label for="input-genre">Genre</label>
+            <input id="input-genre" type="text" placeholder="e.g. sci-fi, fantasy, mystery" value="fantasy">
+          </div>
+          <div class="field">
+            <label for="input-character">Character</label>
+            <input id="input-character" type="text" placeholder="e.g. a retired lighthouse keeper" value="a curious traveler">
+          </div>
+          <div class="field">
+            <label for="input-theme">Theme</label>
+            <input id="input-theme" type="text" placeholder="e.g. letting go, second chances" value="change">
+          </div>
+        </div>
+
+        <div class="field" data-field="advice" hidden>
+          <label for="input-topic">What do you need advice on?</label>
+          <input id="input-topic" type="text" placeholder="e.g. studying effectively, managing stress">
+        </div>
+
+        <button type="submit" class="run-btn" id="run-btn">Run assistant →</button>
+      </form>
+    </section>
+
+    <section class="panel prompt-panel" id="prompt-panel" hidden>
+      <div class="panel-label">Prompt sent to the model</div>
+      <pre id="prompt-text" class="prompt-code"></pre>
+    </section>
+
+    <section class="panel response-panel" id="response-panel" hidden>
+      <div class="panel-label-row">
+        <div class="panel-label">Response</div>
+        <span class="mode-badge" id="response-mode-badge"></span>
+      </div>
+      <div id="response-text" class="response-text"></div>
+
+      <div class="feedback-row" id="feedback-row">
+        <span class="feedback-q">Was this response helpful?</span>
+        <button class="fb-btn fb-yes" id="fb-yes">Yes</button>
+        <button class="fb-btn fb-no" id="fb-no">No</button>
+        <span class="feedback-thanks" id="feedback-thanks" hidden>Thanks — logged for review.</span>
+      </div>
+    </section>
+
+    <section class="panel error-panel" id="error-panel" hidden></section>
+
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
